@@ -8,6 +8,7 @@ package com.BauhausGamesSyndicate.LudumDare29;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.BauhausGamesSyndicate.LudumDare29.overworld.Overworld;
 
 /**
  *
@@ -19,14 +20,23 @@ public class Player extends AbstractCharacter {
         super(x, y, "player");
     }
     
-    public void update(float update){
+    /**
+     *
+     * @param delta
+     */
+    @Override
+    public void update(float delta){
+        setAcceleration(0);
         if (Gdx.input.isKeyPressed(Keys.D)){
-        
+            setAcceleration(getAcceleration() -1);
         }
         
         if (Gdx.input.isKeyPressed(Keys.A)){
-        
+            setAcceleration(getAcceleration() +1);
         }
+        setAcceleration(getAcceleration()*getAccFactor());
+        setVelocity(getVelocity() + getAcceleration());
+        setX(getX() + getVelocity());
+        setY(Overworld.getHeightmapValue((int) getX() ));
     }
-    
 }
