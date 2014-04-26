@@ -5,6 +5,7 @@ import com.BauhausGamesSyndicate.LudumDare29.AbstractEntity;
 import com.BauhausGamesSyndicate.LudumDare29.GameScreen;
 import com.BauhausGamesSyndicate.LudumDare29.Minion;
 import com.badlogic.gdx.Gdx;
+import com.BauhausGamesSyndicate.LudumDare29.Player;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class Overworld {
     private static int[] heightmap;
     private static final ArrayList<AbstractEntity> entityList = new ArrayList<>();
+    private static Player player;
     private static int cameraPos = 0;
     private static int anzMinions = 10;
     private static Chunk[] chunks; 
@@ -37,6 +39,9 @@ public class Overworld {
             heightmap[x] = (int) (Math.random()*Chunk.HEIGHT/2);
         }
         
+        // make Player
+        player = new Player(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()/2f, "player");
+        
         //minnions in liste füllen
         for (int i = 0; i <= anzMinions; i++){
             entityList.add(new Minion(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()/2f ) );
@@ -47,10 +52,12 @@ public class Overworld {
         cameraPos+=delta;
         cameraPos = cameraPos % (Chunk.WIDTH*chunks.length);
         
+        player.update(delta);
+        /*
         for( AbstractEntity m: entityList){
             m.update(delta);
         }
-        
+        */
     }
     
     public void render(GameScreen gs){
@@ -74,10 +81,12 @@ public class Overworld {
         for (Chunk chunk : chunks) {
             chunk.render(gs);
         }
-         
+        player.render(gs);
+        /*
         for( AbstractEntity m: entityList){
             m.render(gs);
         }
+        */
         
         //overlay
         gs.getBatch().draw(overlay, 0, 0);

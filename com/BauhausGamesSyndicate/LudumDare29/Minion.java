@@ -25,8 +25,4 @@ public class Minion extends AbstractCharacter{
         setX(getX() + getSpeed());
         setY(Overworld.getHeightmapValue((int) getX() ));
     }
-
-    public void render(GameScreen gs){
-        draw(gs.getBatch());
-    }
 }
